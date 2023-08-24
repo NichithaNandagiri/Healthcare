@@ -27,7 +27,7 @@ dim(data)
 class(data)
 describe(data)
 
-#######---------------------------------------
+#######--- check any NA values------------------------------------
 sum(is.na(data))
 
 ####---change col names----------------------------------------------
@@ -51,11 +51,11 @@ data$Appointment_Day = as.Date(data$Appointment_Day)
 class(data$Appointment_Day)
 
 #########--day of the week-----------------------------------------------------------
-# 1-sun,2-mon,3-tue.........                            #
-wday(data$Scheduled_Day)                                 #
-                                                        #      
-## week starts with Monday----                          #
-wday(data$Scheduled_Day,week_start = 1)                  #
+# 1-sun,2-mon,3-tue.........                            
+wday(data$Scheduled_Day)                                 
+                                                            
+## week starts with Monday----                          
+wday(data$Scheduled_Day,week_start = 1)                  
 
 ## char day------
 wday(data$Scheduled_Day,label = T)
@@ -82,6 +82,7 @@ data %>%
   group_by(App_weekday) %>% 
   summarise(count= length(App_weekday))
 
+## or
 table(data$Alcoholism)
 table(data$No_show)
 table(data$Handicap)
@@ -105,17 +106,11 @@ ggplot(data,aes(No_show))+   ### without percent
 
 
 ### percent of the values in variables###################################################################
-
-# data %>% 
-#   group_by(No_show) %>% 
-# select(No_show %in% "No", "Yes") %>% 
-#   mutate(n=n/sum(n))
-
 ## percent of the yes , no
 round(prop.table(table(data$No_show))*100,2)
 
 prop.table(xtabs(~Gender+No_show,data=data))*100
-## inference is highly imbalance 
+## Inference is highly imbalance 
 
 lapply(data, function(x) round(prop.table(table(x))*100,2))
 
